@@ -1,4 +1,4 @@
-#Kloudless node API
+#Kloudless Node API
 
 ##Installation
 
