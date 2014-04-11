@@ -68,7 +68,7 @@ function(cb) {
 ###accounts.base()
 **_No required parameters for accounts.base()_**
 ***
-###accounts.data()
+###accounts.get()
 **Required params:** ```account_id```
 ***
 ###accounts.delete()
@@ -80,7 +80,7 @@ function(cb) {
 "file_path" should be the relative path to the file you want to upload.
 "name" should be the name of the file after it's uploaded.
 ***
-###files.metadata()
+###files.get()
 **Required params:** ```account_id, file_id```
 ***
 ###files.delete()
@@ -101,7 +101,7 @@ This is a vanity method, files can also be renamed using the move() method by in
 ###folders.create()
 **Required params:** ```account_id, name```
 ***
-###folders.metadata()
+###folders.get()
 **Required params:** ```account_id, folder_id```
 ***
 ###folders.delete()
@@ -125,7 +125,7 @@ This is a vanity function just like files.rename(), folders.move() can be used t
 **Required params:** ```account_id, file_id```  
 "file_id" should be the file you want to link to.
 ***
-###links.data()
+###links.get()
 **Required params:** ```account_id, link_id```
 ***
 ###links.update()
