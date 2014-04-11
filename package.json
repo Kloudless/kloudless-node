@@ -1,0 +1,20 @@
+{
+    "name": "kloudless",
+    "version": "0.0.1",
+    "author": "Kloudless",
+    "description": "Simple Node interface to the Kloudless API.",
+    "contributors": [
+        {
+            "name": "Jackson Broussard",
+            "email": "jackson@kloudless.com"
+        }
+    ],
+    "main": "./lib/kloudless",
+    "dependencies": {
+        "nodeunit": ">=0.8.6",
+        "async": ">=0.6.2",
+        "form-data": ">=0.1.2"
+    },
+    "licenses": [ { "type": "MIT License"
+                  , "url": "http://www.opensource.org/licenses/mit-license.php" } ]
+}
