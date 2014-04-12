@@ -3,7 +3,7 @@
 ##Installation
 
 ```
-npm install kloudless
+npm install git://github.com/Kloudless/kloudless-node
 ```
 
 
