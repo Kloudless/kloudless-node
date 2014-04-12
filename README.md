@@ -3,7 +3,7 @@
 ##Installation
 
 ```
-npm install kloudless
+npm install https://github.com/kloudless/kloudless-node/tarball/master
 ```
 
 
