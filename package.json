@@ -9,6 +9,10 @@
             "email": "jackson@kloudless.com"
         }
     ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kloudless/kloudless-node.git"
+    },
     "main": "./lib/kloudless",
     "dependencies": {
         "nodeunit": ">=0.8.6",

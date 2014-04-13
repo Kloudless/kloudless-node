@@ -62,17 +62,25 @@ async.waterfall([
         kloudless.files.contents(
             {"account_id": accountId,
             "file_id": fileId},
-            function(err,res) {
+            function(err,filestream) {
                 if(err) {
                     console.log("Files contents: "+err);
                 } else {
-                    //console.log("there was a result (file contents)! :");
-                    //console.log(res);
-                    cb(null);
+                    var filecontents = '';
+                    console.log("got the filestream:");
+                    filestream.on('data',function(chunk){
+                        console.log("reading in data chunk...");
+                        console.log(chunk);
+                        filecontents += chunk;
+                    });
+                    filestream.on('end',function(){
+                        console.log("finished reading file!");
+                        console.log(filecontents);
+                        return cb(null);
+                    });
                 }
             }
         );
-
     },
 
     function(cb) {
@@ -138,14 +146,14 @@ async.waterfall([
 
     function(cb) {
         
-        kloudless.files.metadata(
+        kloudless.files.get(
             {"account_id": accountId,
             "file_id": fileId},
             function(err,res) {
                 if(err) {
-                    console.log("Files metadata: "+err);
+                    console.log("Files get: "+err);
                 } else {
-                    //console.log("there was a result (file metadata)! :");
+                    //console.log("there was a result (file get)! :");
                     //console.log(res);
                     cb(null);
                 }
@@ -173,7 +181,7 @@ async.waterfall([
     },
 
     function(cb) {
-        
+        console.log("file deletion");
         kloudless.files.delete(
             {"account_id": accountId,
             "file_id": fileId},
@@ -210,7 +218,8 @@ async.waterfall([
 
 ],function(err){
     if (err) {
-        console.log("Test failed: "+err);
+        console.log("Test failed: ");
+        console.error(err);
     } else {
         console.log("Tests complete!");
     }
