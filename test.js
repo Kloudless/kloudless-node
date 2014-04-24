@@ -4,7 +4,6 @@ var kloudless = require('./lib/kloudless')
                        ('your-api-key-here');
 var async = require('async');
 var fs = require('fs');
-var assert = require('assert');
 
 var randString = function() { return (Math.random() + 1).toString(36).substring(7) };
 
@@ -20,15 +19,14 @@ async.waterfall([
 
     function(cb) {
 
+        console.log("account base test...")
         kloudless.accounts.base({},
-            function(err,res){
-                if(err) {
+            function(err, res){
+                if (err) {
                     cb("Accounts base: "+err)
                 } else {
-                    //console.log("there was a result (accounts base)! :");
-                    //console.log(res);
                     accountId = res["objects"][1]["id"];
-                    assert.ok(accountId);
+                    console.log("accounts base test pass");
                     cb(null)
                 }
             }
@@ -37,19 +35,28 @@ async.waterfall([
     },
 
     function(cb) {
+        // create the Buffer to pass in to files.upload()
+        // this variable can be a Buffer created through any valid method
+        // i.e. new Buffer("hello world")
+        var filebuffer = fs.readFileSync("test.txt");
 
+        console.log("files upload test...")
         kloudless.files.upload(
             {"name": fileName,
             "account_id": accountId,
             "parent_id": "root",
-            "file_path": "test.txt"},
-            function(err,res) {
-                if(err) {
-                    console.log("Files upload: "+err);
+            "file": filebuffer,
+            // all API calls can specify URL query parameters by defining "queryParams"
+            "queryParams": {
+                    "overwrite": "true"
+                }  
+            },
+            function(err, res) {
+                if (err) {
+                    cb("Files upload: "+err);
                 } else {
-                    //console.log("there was a result (file upload)! :");
-                    //console.log(res);
                     fileId = res['id'];
+                    console.log("files upload test pass");
                     cb(null);
                 }
             }
@@ -58,17 +65,17 @@ async.waterfall([
     },
 
     function(cb) {
-        
+        console.log("files contents test...")
         kloudless.files.contents(
             {"account_id": accountId,
             "file_id": fileId},
-            function(err,filestream) {
-                if(err) {
-                    console.log("Files contents: "+err);
+            function(err, filestream) {
+                if (err) {
+                    cb("Files contents: "+err);
                 } else {
                     var filecontents = '';
                     console.log("got the filestream:");
-                    filestream.on('data',function(chunk){
+                    filestream.on('data', function(chunk){
                         console.log("reading in data chunk...");
                         console.log(chunk);
                         filecontents += chunk;
@@ -76,6 +83,7 @@ async.waterfall([
                     filestream.on('end',function(){
                         console.log("finished reading file!");
                         console.log(filecontents);
+                        console.log("files contents test pass");
                         return cb(null);
                     });
                 }
@@ -85,17 +93,17 @@ async.waterfall([
 
     function(cb) {
 
+        console.log("folders create test...")
         kloudless.folders.create(
             {"account_id": accountId,
             "name": folderName,
             "parent_id": "root"},
-            function(err,res) {
-                if(err) {
-                    console.log("Folders create: "+err);
+            function(err, res) {
+                if (err) {
+                    cb("Folders create: "+err);
                 } else {
-                    //console.log("there was a result (folders create)! :");
-                    //console.log(res);
                     folderId = res['id'];
+                    console.log("folders create test pass");
                     cb(null);
                 }
             }
@@ -105,17 +113,17 @@ async.waterfall([
 
     function(cb) {
         
+        console.log("files move test...");
         kloudless.files.move(
             {"parent_id": folderId,
             "account_id": accountId,
-            "file_id": fileId,},
-            function(err,res) {
-                if(err) {
-                    console.log("Files move: "+err);
+            "file_id": fileId},
+            function(err, res) {
+                if (err) {
+                    cb("Files move: "+err);
                 } else {
-                    //console.log("there was a result (file move)! :");
-                    //console.log(res);
                     fileId = res['id'];
+                    console.log("files move test pass");
                     cb(null);
                 }
             }
@@ -126,17 +134,17 @@ async.waterfall([
 
     function(cb) {
         
+        console.log("files rename test...");
         kloudless.files.rename(
             {"name": fileReName,
             "account_id": accountId,
             "file_id": fileId},
-            function(err,res) {
-                if(err) {
-                    console.log("Files rename: "+err);
+            function(err, res) {
+                if (err) {
+                    cb("Files rename: "+err);
                 } else {
-                    //console.log("there was a result (file rename)! :");
-                    //console.log(res);
                     fileId = res['id'];
+                    console.log("files rename test pass");
                     cb(null);
                 }
             }
@@ -146,15 +154,15 @@ async.waterfall([
 
     function(cb) {
         
+        console.log("files get test...");
         kloudless.files.get(
             {"account_id": accountId,
             "file_id": fileId},
-            function(err,res) {
-                if(err) {
-                    console.log("Files get: "+err);
+            function(err, res) {
+                if (err) {
+                    cb("Files get: "+err);
                 } else {
-                    //console.log("there was a result (file get)! :");
-                    //console.log(res);
+                    console.log("files get test pass");
                     cb(null);
                 }
             }
@@ -164,15 +172,15 @@ async.waterfall([
 
     function(cb) {
 
+        console.log("files contents test...");
         kloudless.folders.contents(
             {"account_id": accountId,
             "folder_id": folderId},
-            function(err,res) {
-                if(err) {
-                    console.log("Folders contents: "+err);
+            function(err, res) {
+                if (err) {
+                    cb("Folders contents: "+err);
                 } else {
-                    //console.log("there was a result (folders contents)! :");
-                    //console.log(res);
+                    console.log("folders contents test pass");
                     cb(null);
                 }
             }
@@ -181,16 +189,15 @@ async.waterfall([
     },
 
     function(cb) {
-        console.log("file deletion");
+        console.log("files delete test...");
         kloudless.files.delete(
             {"account_id": accountId,
             "file_id": fileId},
-            function(err,res) {
-                if(err) {
-                    console.log("Files delete: "+err);
+            function(err, res) {
+                if (err) {
+                    cb("Files delete: "+err);
                 } else {
-                    //console.log("there was a result (file delete)! :");
-                    //console.log(res);
+                    console.log("files delete test pass");
                     cb(null);
                 }
             }
@@ -199,16 +206,15 @@ async.waterfall([
     },
 
     function(cb) {
-
+        console.log("folders delete test...");
         kloudless.folders.delete(
             {"account_id": accountId,
             "folder_id": folderId},
-            function(err,res) {
-                if(err) {
-                    console.log("Folders delete: "+err);
+            function(err, res) {
+                if (err) {
+                    cb("Folders delete: "+err);
                 } else {
-                    //console.log("there was a result (folder delete)! :");
-                    //console.log(res);
+                    console.log("folders delete test pass");
                     cb(null);
                 }
             }
