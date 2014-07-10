@@ -118,8 +118,8 @@ _See file upload example above._
 
 ###files.upload()
 **Required params:** ```account_id, parent_id, file, name```  
-"file" should be an instance of Buffer or fs.ReadStream.
-You can create a ReadStream by calling ```fs.createReadStream(<file name here>)```
+"file" should be an instance of Buffer.
+You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
 "name" should be the name of the file after it's uploaded.
 ***
 ###files.get()

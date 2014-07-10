@@ -1,7 +1,7 @@
 "use strict";
 
 var kloudless = require('./lib/kloudless')
-                       ('your-api-key-here');
+                       ('your-api-key-here!');
 var async = require('async');
 var fs = require('fs');
 
@@ -27,6 +27,26 @@ async.waterfall([
                 } else {
                     accountId = res["objects"][1]["id"];
                     console.log("accounts base test pass");
+                    cb(null)
+                }
+            }
+        );
+
+    },
+
+    function(cb) {
+
+        console.log("account search test...")
+        kloudless.accounts.search({
+            "account_id": accountId,
+            "q": "txt"
+            },
+            function(err, res){
+                if (err) {
+                    cb("Accounts base: "+err)
+                } else {
+                    console.log("accounts search test pass");
+                    console.log(res);
                     cb(null)
                 }
             }
