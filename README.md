@@ -177,7 +177,7 @@ This is a vanity function just like ```files.rename()```. ```folders.move()``` c
 Optional parameters:
 "active": enables the link if true, disables the link if false.
 "password": set a password for the link.
-"expiration": set an expiration date for the link.
+"expiration": set an expiration date for the link. Can be an instance of Date() or a number (in milliseconds).
 ***
 ###links.delete()
 **Required params:** ```account_id, link_id```
