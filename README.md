@@ -143,7 +143,7 @@ Returns a FileStream. See code example for ```files.contents()``` above. Example
 ***
 
 ###folders.create()
-**Required params:** ```account_id, name```
+**Required params:** ```account_id, folder_id, name```
 ***
 ###folders.get()
 **Required params:** ```account_id, folder_id```
@@ -155,7 +155,7 @@ Returns a FileStream. See code example for ```files.contents()``` above. Example
 **Required params:** ```account_id, folder_id, parent_id```
 ***
 ###folders.rename()
-**Required params:** ```account_id, name```  
+**Required params:** ```account_id, folder_id, name```  
 This is a vanity function just like ```files.rename()```. ```folders.move()``` can be used to rename as well.
 ***
 ###folders.contents()
@@ -173,8 +173,11 @@ This is a vanity function just like ```files.rename()```. ```folders.move()``` c
 **Required params:** ```account_id, link_id```
 ***
 ###links.update()
-**Required params:** ```account_id, link_id, active```  
-Currently for setting "active" true or false. Will be able to set "expiration" and "password" in the future.
+**Required params:** ```account_id, link_id```  
+Optional parameters:
+"active": enables the link if true, disables the link if false.
+"password": set a password for the link.
+"expiration": set an expiration date for the link.
 ***
 ###links.delete()
 **Required params:** ```account_id, link_id```
