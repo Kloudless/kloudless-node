@@ -12,6 +12,7 @@ var fileReName = randString();
 var folderName = randString();
 var folderReName = randString();
 var fileId;
+var linkId;
 var folderId;
 var accountId;
 
@@ -19,7 +20,7 @@ async.waterfall([
 
     function(cb) {
 
-        console.log("account base test...")
+        console.log("account base test...");
         kloudless.accounts.base({},
             function(err, res){
                 if (err) {
@@ -36,7 +37,7 @@ async.waterfall([
 
     function(cb) {
 
-        console.log("account search test...")
+        console.log("account search test...");
         kloudless.accounts.search({
             "account_id": accountId,
             "q": "txt"
@@ -46,7 +47,6 @@ async.waterfall([
                     cb("Accounts base: "+err)
                 } else {
                     console.log("accounts search test pass");
-                    console.log(res);
                     cb(null)
                 }
             }
@@ -60,7 +60,7 @@ async.waterfall([
         // i.e. new Buffer("hello world")
         var filebuffer = fs.readFileSync("test.txt");
 
-        console.log("files upload test...")
+        console.log("files upload test...");
         kloudless.files.upload(
             {"name": fileName,
             "account_id": accountId,
@@ -85,7 +85,46 @@ async.waterfall([
     },
 
     function(cb) {
-        console.log("files contents test...")
+        console.log("link create test...");
+        kloudless.links.create(
+            {"account_id": accountId,
+            "file_id": fileId},
+            function(err, res) {
+                if(err) {
+                    cb("Link create: "+err);
+                } else {
+                    linkId = res['id'];
+                    console.log("link create test pass");
+                    cb(null)
+                }
+            }
+        );
+
+    },
+
+    function(cb) {
+        console.log("link update test...");
+        kloudless.links.update(
+            {"account_id": accountId,
+            "link_id": linkId,
+            "expiration": new Date(3),
+            "active": false},
+            function(err, res) {
+                if(err) {
+                    cb("Link update: "+err);
+                    console.error(err);
+                } else {
+                    console.log("link update test pass");
+                    console.log(res);
+                    cb(null)
+                }
+            }
+        );
+        
+    },
+
+    function(cb) {
+        console.log("files contents test...");
         kloudless.files.contents(
             {"account_id": accountId,
             "file_id": fileId},
@@ -113,7 +152,7 @@ async.waterfall([
 
     function(cb) {
 
-        console.log("folders create test...")
+        console.log("folders create test...");
         kloudless.folders.create(
             {"account_id": accountId,
             "name": folderName,
