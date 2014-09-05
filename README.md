@@ -1,15 +1,13 @@
 # Kloudless Node API
 
 ## Installation
-
 ```
 npm install git://github.com/Kloudless/kloudless-node
 ```
 
-
 ## Node-specific docs and examples
 
-Normal API docs available here: https://developers.kloudless.com/docs
+REST API docs available here: https://developers.kloudless.com/docs
 
 API methods are called in the scheme of...
 ```
@@ -123,8 +121,8 @@ You can create a Buffer like this: ```var your_var_name = new Buffer("the file c
 "name" should be the name of the file after it's uploaded.
 ***
 ### files.uploadMultipart()
-**Required params:** ```account_id, parent_id, input, name, offset```  
-"file" should be an instance of Buffer or Stream.
+**Required params:** ```account_id, parent_id, file, name, offset```  
+"file" should be an instance of Buffer.
 You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
 "name" should be the name of the file after it's uploaded.
 This method creates an EventEmitter that emits the following events:
