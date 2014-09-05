@@ -121,18 +121,33 @@ You can create a Buffer like this: ```var your_var_name = new Buffer("the file c
 "name" should be the name of the file after it's uploaded.
 ***
 ### files.uploadMultipart()
-**Required params:** ```account_id, parent_id, file, name, offset```  
-"file" should be an instance of Buffer.
-You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
-"name" should be the name of the file after it's uploaded.
-This method creates an EventEmitter that emits the following events:
-* 'start'
-* 'progress'
-* 'complete'
-* 'success'
-* 'error'
-The object also exposes the following methods:
-* abort()
+**Parameters:** ```account_id, parent_id, file, name, [session_id], [offset]```
+* `file` is a `Buffer` or `ReadStream`
+* `name` is the name of the file after it's uploaded
+* `session` is the multipart session ID, if resuming an upload
+* `offset` should be an integer number of chunks to offset, if resuming an upload (file length offsets are computed automatically)
+
+This method returns an `MultipartUpload extends EventEmitter` that emits the following events:
+* `start(session_id)` -- fired after the initialisation completes and file transfer begins, passing the multipart session ID
+* `progress(completion)` -- fired after every successful chunk transfer, passing a completion state
+* `complete` -- fired after a transfer is finished, regardless of whether it succeeds. Fires after success state events
+* `success` -- fires after a transfer completes successfully
+* `error(err, completion)` -- fires after a transfer encounters a fatal error, passing the error and a completion state
+* `abort` -- fires after a transfer is aborted
+
+Completion states are objects with keys:
+* `completed` -- some integer of completed chunks
+* `total` -- some integer total number of chunks
+
+The `MultipartUpload` also exposes the following methods:
+<!-- * `pause()` -- pauses the transfer -->
+<!-- * `resume()` -- resumes the transfer -->
+* `abort()` -- aborts the transfer
+***
+### files.stopMultipart()
+**Parameters:** `account_id, session_id`
+
+Aborts the specified multipart upload session to prevent storage leaks.
 ***
 ### files.get()
 **Required params:** ```account_id, file_id```
