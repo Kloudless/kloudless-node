@@ -69,7 +69,7 @@ async.waterfall([
             // all API calls can specify URL query parameters by defining "queryParams"
             "queryParams": {
                     "overwrite": "true"
-                }  
+                }
             },
             function(err, res) {
                 if (err) {
@@ -120,7 +120,7 @@ async.waterfall([
                 }
             }
         );
-        
+
     },
 
     function(cb) {
@@ -171,7 +171,7 @@ async.waterfall([
     },
 
     function(cb) {
-        
+
         console.log("files move test...");
         kloudless.files.move(
             {"parent_id": folderId,
@@ -192,7 +192,7 @@ async.waterfall([
 
 
     function(cb) {
-        
+
         console.log("files rename test...");
         kloudless.files.rename(
             {"name": fileReName,
@@ -212,7 +212,7 @@ async.waterfall([
     },
 
     function(cb) {
-        
+
         console.log("files get test...");
         kloudless.files.get(
             {"account_id": accountId,
@@ -289,4 +289,3 @@ async.waterfall([
         console.log("Tests complete!");
     }
 })
-

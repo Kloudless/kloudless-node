@@ -1,13 +1,13 @@
-#Kloudless Node API
+# Kloudless Node API
 
-##Installation
+## Installation
 
 ```
 npm install git://github.com/Kloudless/kloudless-node
 ```
 
 
-##Node-specific docs and examples
+## Node-specific docs and examples
 
 Normal API docs available here: https://developers.kloudless.com/docs
 
@@ -100,84 +100,98 @@ function(cb){
 ]);
 ```
 
-##Resources and Methods
+## Resources and Methods
 
 **All API calls can specify URL query parameters by defining "queryParams".**
 _See file upload example above._
 ***
 
-###accounts.base()
+### accounts.base()
 **_No required parameters for accounts.base()_**
 ***
-###accounts.get()
+### accounts.get()
 **Required params:** ```account_id```
 ***
-###accounts.delete()
+### accounts.delete()
 **Required params:** ```account_id```
 ***
 
-###files.upload()
+### files.upload()
 **Required params:** ```account_id, parent_id, file, name```  
 "file" should be an instance of Buffer.
 You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
 "name" should be the name of the file after it's uploaded.
 ***
-###files.get()
+### files.uploadMultipart()
+**Required params:** ```account_id, parent_id, input, name, offset```  
+"file" should be an instance of Buffer or Stream.
+You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
+"name" should be the name of the file after it's uploaded.
+This method creates an EventEmitter that emits the following events:
+* 'start'
+* 'progress'
+* 'complete'
+* 'success'
+* 'error'
+The object also exposes the following methods:
+* abort()
+***
+### files.get()
 **Required params:** ```account_id, file_id```
 Gets metadata for the file. **Not for downloading. If you want to download, use** ```contents()```**.**
 ***
-###files.delete()
+### files.delete()
 **Required params:** ```account_id, file_id```
 ***
-###files.move()
+### files.move()
 **Required params:** ```account_id, file_id, parent_id```  
 "parent_id" should be the ID of the folder you wish to move the file to.
 ***
-###files.rename()
+### files.rename()
 **Required params:** ```account_id, file_id, name```  
 This is a vanity method, files can also be renamed using the ```move()``` method by including the desired "name" parameter.
 ***
-###files.contents()
+### files.contents()
 **Required params:** ```account_id, file_id```
 Returns a FileStream. See code example for ```files.contents()``` above. Example also in test.js.
 ***
 
-###folders.create()
+### folders.create()
 **Required params:** ```account_id, folder_id, name```
 ***
-###folders.get()
+### folders.get()
 **Required params:** ```account_id, folder_id```
 ***
-###folders.delete()
+### folders.delete()
 **Required params:** ```account_id, folder_id```
 ***
-###folders.move()
+### folders.move()
 **Required params:** ```account_id, folder_id, parent_id```
 ***
-###folders.rename()
+### folders.rename()
 **Required params:** ```account_id, folder_id, name```  
 This is a vanity function just like ```files.rename()```. ```folders.move()``` can be used to rename as well.
 ***
-###folders.contents()
+### folders.contents()
 **Required params:** ```account_id, folder_id```
 ***
 
-###links.base()
+### links.base()
 **Required params:** ```account_id```
 ***
-###links.create()
+### links.create()
 **Required params:** ```account_id, file_id```  
 "file_id" should be the file you want to link to.
 ***
-###links.get()
+### links.get()
 **Required params:** ```account_id, link_id```
 ***
-###links.update()
+### links.update()
 **Required params:** ```account_id, link_id```  
 Optional parameters:
 "active": enables the link if true, disables the link if false.
 "password": set a password for the link.
 "expiration": set an expiration date for the link. Can be an instance of Date() or a number (in milliseconds).
 ***
-###links.delete()
+### links.delete()
 **Required params:** ```account_id, link_id```
