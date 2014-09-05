@@ -19,82 +19,73 @@ We'll start with a couple of examples:
 ```javascript
 var async = require('async'); // for clean demonstration
 
-var kloudless = require('kloudless')
-                       ('your-api-key-goes-here!');
+var kloudless = require('kloudless')('your-api-key-here');
 var fs = require('fs');
 
-var accountId;
-var fileId;
+var accountId, fileId;
 
 async.series([
-function(cb) {
-
+  function(cb) {
     // to get the base account data
-    kloudless.accounts.base({}, // needs no data passed in
-        function(err,res){
-            if (err) { console.log("Error getting the account data: "+err); }
-            else {
-                // assuming you authorized at least one service (Dropbox, Google Drive, etc.)
-                console.log("We got the account data!");
-                accountId = res["objects"][0]["id"];
-                cb();
-            }
-        }
-    );
+    kloudless.accounts.base({}, function(err, res) {
+      if (err) {
+        return console.log("Error getting the account data: " + err);
+      }
+      // assuming you authorized at least one service (Dropbox, Google Drive, etc.)
+      console.log("We got the account data!");
+      accountId = res["objects"][0]["id"];
+      cb();
+    });
+  },
 
-},
-function(cb) {
+  function(cb) {
     // create the fs.ReadStream to pass in to files.upload()
     var filestream = fs.createReadStream('./test.txt');
 
     // to upload a file to the account we just got data for
-    kloudless.files.upload(
-        {"name": "test.txt",
-        "account_id": accountId,
-        "parent_id": "root",
-        "file": filestream,
-        // all API calls can specify URL query parameters by defining "queryParams"
-        "queryParams": {
-                "overwrite": "true"
-            }
-        },
-        function(err, res) {
-            if (err) {
-                console.log("Error uploading file: "+err);
-                cb(err);
-            } else {
-                console.log("We uploaded the file!");
-                fileId = res['id'];
-                cb();
-            }
-        }
-    );
-},
-function(cb){
+    kloudless.files.upload({
+      "name": "test.txt",
+      "account_id": accountId,
+      "parent_id": "root",
+      "file": filestream,
+      // all API calls can specify URL query parameters by defining "queryParams"
+      "queryParams": {
+        "overwrite": "true"
+      }
+    }, function(err, res) {
+      if (err) {
+        console.log("Error uploading file: " + err);
+        return cb(err);
+      }
+      console.log("We uploaded the file!");
+      fileId = res['id'];
+      cb();
+    });
+  },
+
+  function(cb){
     // and now we're going to download that file we just uploaded
-    kloudless.files.contents(
-        {"account_id": accountId,
-        "file_id": fileId},
-        function(err, filestream) {
-            if (err) {
-                console.log("Files contents: "+err);
-            } else {
-                var filecontents = '';
-                console.log("got the filestream:");
-                filestream.on('data',function(chunk){
-                    console.log("reading in data chunk...");
-                    console.log(chunk);
-                    filecontents += chunk;
-                });
-                filestream.on('end',function(){
-                    console.log("finished reading file!");
-                    console.log(filecontents);
-                    cb();
-                });
-            }
-        }
-    );
-}
+    kloudless.files.contents({
+      "account_id": accountId,
+      "file_id": fileId
+    }, function(err, filestream) {
+      if (err) {
+        return console.log("Files contents: " + err);
+      }
+      var filecontents = '';
+      console.log("got the filestream:");
+      filestream.on('data', function(chunk) {
+        console.log("reading in data chunk...");
+        console.log(chunk);
+        filecontents += chunk;
+      });
+      filestream.on('end',function() {
+        console.log("finished reading file!");
+        console.log(filecontents);
+        cb();
+      });
+    });
+  }
 ]);
 ```
 
@@ -121,32 +112,54 @@ You can create a Buffer like this: ```var your_var_name = new Buffer("the file c
 "name" should be the name of the file after it's uploaded.
 ***
 ### files.uploadMultipart()
-**Parameters:** ```account_id, parent_id, file, name, [session_id], [offset]```
-* `file` is a `Buffer` or `ReadStream`
-* `name` is the name of the file after it's uploaded
-* `session` is the multipart session ID, if resuming an upload
-* `offset` should be an integer number of chunks to offset, if resuming an upload (file length offsets are computed automatically)
+**Parameters:** `options`
 
-This method returns an `MultipartUpload extends EventEmitter` that emits the following events:
+`options` is an options object with keys:
+* `account_id` -- the ID of the account you're uploading to (i.e. the account which owns the S3/Azure bucket)
+* `parent_id` -- the ID of the folder you're uploading the file to
+* `file` -- a `Buffer` or `ReadStream` of the file being uploaded
+* `name` -- the name of the file after it's uploaded
+* `max_connections` -- (optional) the maximum number of concurrent connections, defaults to 5
+* `max_retries` -- (optional) the maximum number of times a dropped connection is retried, defaults to 3
+
+This method returns a `MultipartUpload extends EventEmitter` that emits the following events:
 * `start(session_id)` -- fired after the initialisation completes and file transfer begins, passing the multipart session ID
 * `progress(completion)` -- fired after every successful chunk transfer, passing a completion state
 * `complete` -- fired after a transfer is finished, regardless of whether it succeeds. Fires after success state events
-* `success` -- fires after a transfer completes successfully
+* `success(result)` -- fires after a transfer completes successfully, passing the metadata of the newly uploaded file
 * `error(err, completion)` -- fires after a transfer encounters a fatal error, passing the error and a completion state
 * `abort` -- fires after a transfer is aborted
 
 Completion states are objects with keys:
-* `completed` -- some integer of completed chunks
-* `total` -- some integer total number of chunks
+* `completed` -- some integer of completed parts
+* `account_id` -- the current account ID, used to resume interrupted uploads
+* `session_id` -- the current session ID, used to resume interrupted uploads
+* `offset` -- the offset of completed parts, used to resume interrupted uploads
+
+Completion states can be committed to disk and then passed into resumeMultipart to resume uploads that were interrupted by server crashes.
 
 The `MultipartUpload` also exposes the following methods:
 <!-- * `pause()` -- pauses the transfer -->
 <!-- * `resume()` -- resumes the transfer -->
 * `abort()` -- aborts the transfer
 ***
-### files.stopMultipart()
-**Parameters:** `account_id, session_id`
 
+### files.resumeMultipart()
+**Parameters:** `options`
+
+`options` is a completion state, with at least keys:
+* `account_id` -- the account ID to resume
+* `session_id` -- the session ID to resume
+* `offset` -- the current session offset
+
+This method returns a `MultipartUpload` which behaves exactly as if constructed in a standard upload.
+
+### files.stopMultipart()
+**Parameters:** `options`
+
+`options` is an options object with keys:
+* `account_id` -- the ID of the account with a session to abort
+* `session_id` -- the ID of the session to abort
 Aborts the specified multipart upload session to prevent storage leaks.
 ***
 ### files.get()

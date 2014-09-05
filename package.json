@@ -20,7 +20,8 @@
     "form-data": ">=0.1.2",
 
     "request": "~2.42.0",
-    "bluebird": "~2.3.2"
+    "bluebird": "~2.3.2",
+    "streamifier": "~0.1.0"
   },
   "devDependencies": {
     "nodeunit": ">=0.8.6",
