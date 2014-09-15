@@ -162,6 +162,7 @@ This method returns a `MultipartUpload` which behaves exactly as if constructed 
 * `session_id` -- the ID of the session to abort
 Aborts the specified multipart upload session to prevent storage leaks.
 ***
+
 ### files.get()
 **Required params:** ```account_id, file_id```
 Gets metadata for the file. **Not for downloading. If you want to download, use** ```contents()```**.**
