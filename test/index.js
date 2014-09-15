@@ -23,7 +23,7 @@ async.waterfall([
       }
       accountId = res.objects[0].id;
       console.log('accounts base test pass');
-      console.log('accounts:', res.objects);
+      // console.log('accounts:', res.objects);
       cb(null);
     });
   },
