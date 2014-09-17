@@ -106,7 +106,7 @@ _See file upload example above._
 ***
 
 ### files.upload()
-**Required params:** ```account_id, parent_id, file, name```  
+**Required params:** ```account_id, parent_id, file, name```
 "file" should be an instance of Buffer.
 You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
 "name" should be the name of the file after it's uploaded.
@@ -119,6 +119,7 @@ You can create a Buffer like this: ```var your_var_name = new Buffer("the file c
 * `parent_id` -- the ID of the folder you're uploading the file to
 * `file` -- a `Buffer` or `ReadStream` of the file being uploaded
 * `name` -- the name of the file after it's uploaded
+* `overwrite` -- (optional) a boolean to overwrite a file with the same name
 * `max_connections` -- (optional) the maximum number of concurrent connections, defaults to 5
 * `max_retries` -- (optional) the maximum number of times a dropped connection is retried, defaults to 3
 
@@ -171,11 +172,11 @@ Gets metadata for the file. **Not for downloading. If you want to download, use*
 **Required params:** ```account_id, file_id```
 ***
 ### files.move()
-**Required params:** ```account_id, file_id, parent_id```  
+**Required params:** ```account_id, file_id, parent_id```
 "parent_id" should be the ID of the folder you wish to move the file to.
 ***
 ### files.rename()
-**Required params:** ```account_id, file_id, name```  
+**Required params:** ```account_id, file_id, name```
 This is a vanity method, files can also be renamed using the ```move()``` method by including the desired "name" parameter.
 ***
 ### files.contents()
@@ -196,7 +197,7 @@ Returns a FileStream. See code example for ```files.contents()``` above. Example
 **Required params:** ```account_id, folder_id, parent_id```
 ***
 ### folders.rename()
-**Required params:** ```account_id, folder_id, name```  
+**Required params:** ```account_id, folder_id, name```
 This is a vanity function just like ```files.rename()```. ```folders.move()``` can be used to rename as well.
 ***
 ### folders.contents()
@@ -207,14 +208,14 @@ This is a vanity function just like ```files.rename()```. ```folders.move()``` c
 **Required params:** ```account_id```
 ***
 ### links.create()
-**Required params:** ```account_id, file_id```  
+**Required params:** ```account_id, file_id```
 "file_id" should be the file you want to link to.
 ***
 ### links.get()
 **Required params:** ```account_id, link_id```
 ***
 ### links.update()
-**Required params:** ```account_id, link_id```  
+**Required params:** ```account_id, link_id```
 Optional parameters:
 "active": enables the link if true, disables the link if false.
 "password": set a password for the link.
