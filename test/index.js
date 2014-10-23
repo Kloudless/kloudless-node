@@ -189,7 +189,7 @@ async.waterfall([
   },
 
   function(cb) {
-    console.log('files contents test...');
+    console.log('folders contents test...');
     kloudless.folders.contents({
       account_id: accountId,
       folder_id: folderId
