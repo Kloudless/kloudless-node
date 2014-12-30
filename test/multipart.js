@@ -7,7 +7,7 @@ var path = require('path')
 var test_file = 'big-test.tar.gz';
 
 if (process.env.API_HOST)
-    kloudless.setHost(process.env.API_HOST, 443);
+    kloudless.setHost(process.env.API_HOST, process.env.API_PORT || 443);
 if (process.env.API_CA != null)
     kloudless.setCA(process.env.API_CA);
 
