@@ -1,12 +1,17 @@
 var path = require('path')
   , fs = require('fs')
 
-  , MultipartUpload = require('../lib/methods/multipart')(process.env.API_KEY || 'your-api-key-here');
+  , kloudless = require('../lib/kloudless')(process.env.API_KEY || 'your-api-key-here');
 
 // var test_file = 'bigger-test.deb';
 var test_file = 'big-test.tar.gz';
 
-var mpu = new MultipartUpload({
+if (process.env.API_HOST)
+    kloudless.setHost(process.env.API_HOST, 443);
+if (process.env.API_CA != null)
+    kloudless.setCA(process.env.API_CA);
+
+var mpu = kloudless.files.uploadMultipart({
   account_id: process.env.TEST_ACCOUNT_ID || 'some-test-account-id-here',
   parent_id: process.env.TEST_ACCOUNT_FOLDER || 'some-folder-id-here',
   file: fs.createReadStream(path.join(__dirname, 'fixtures', test_file)),

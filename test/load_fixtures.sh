@@ -9,7 +9,7 @@ mkdir -p fixtures
 pushd fixtures
 
 for i in big-test.tar.gz bigger-test.deb test.txt; do
-    wget $S3_URL/$i
+    wget -N $S3_URL/$i
 done
 
 popd

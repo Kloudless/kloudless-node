@@ -3,6 +3,11 @@ var kloudless = require('../lib/kloudless')(process.env.API_KEY || 'your-api-key
   , fs = require('fs')
   , path = require('path');
 
+if (process.env.API_HOST)
+    kloudless.setHost(process.env.API_HOST, 443);
+if (process.env.API_CA != null)
+    kloudless.setCA(process.env.API_CA);
+
 var randString = function() {return (Math.random() + 1).toString(36).substring(7);};
 
 var fileName = randString();
@@ -22,6 +27,8 @@ async.waterfall([
         return cb('Accounts base: ' + err);
       }
       accountId = res.objects[0].id;
+      if (process.env.TEST_ACCOUNT_ID)
+        accountId = process.env.ACCOUNT_ID;
       console.log('accounts base test pass');
       // console.log('accounts:', res.objects);
       cb(null);

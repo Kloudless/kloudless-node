@@ -223,3 +223,15 @@ Optional parameters:
 ***
 ### links.delete()
 **Required params:** ```account_id, link_id```
+
+## Testing
+
+`API_KEY=<api key> node index.js`
+
+Some other env vars that may be useful are:
+
+* TEST_ACCOUNT_ID
+* API_HOST
+* API_CA
+* TEST_ACCOUNT_FOLDER (multipart.js only)
+
