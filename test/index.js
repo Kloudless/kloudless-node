@@ -28,7 +28,7 @@ async.waterfall([
       }
       accountId = res.objects[0].id;
       if (process.env.TEST_ACCOUNT_ID)
-        accountId = process.env.ACCOUNT_ID;
+        accountId = process.env.TEST_ACCOUNT_ID;
       console.log('accounts base test pass');
       // console.log('accounts:', res.objects);
       cb(null);
