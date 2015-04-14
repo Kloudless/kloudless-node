@@ -15,6 +15,7 @@ var fileReName = randString();
 var folderName = randString();
 var folderReName = randString();
 var fileId;
+var fileBuffer = fs.readFileSync(path.join(__dirname, 'fixtures/test.txt'));
 var linkId;
 var folderId;
 var accountId;
@@ -50,17 +51,12 @@ async.waterfall([
   },
 
   function(cb) {
-    // create the Buffer to pass in to files.upload()
-    // this variable can be a Buffer created through any valid method
-    // i.e. new Buffer('hello world')
-    var filebuffer = fs.readFileSync(path.join(__dirname, 'fixtures/test.txt'));
-
     console.log('files upload test...');
     kloudless.files.upload({
       name: fileName,
       account_id: accountId,
       parent_id: 'root',
-      file: filebuffer,
+      file: fileBuffer,
       // all API calls can specify URL query parameters by defining 'queryParams'
       queryParams: {
         overwrite: true
@@ -126,9 +122,13 @@ async.waterfall([
       });
       filestream.on('end',function(){
         console.log('finished reading file!');
-        console.log(filecontents);
-        console.log('files contents test pass');
-        return cb(null);
+        if (filecontents === fileBuffer.toString()) {
+          console.log('files contents test pass');
+          return cb(null);
+        }
+        else {
+          return cb("File contents fail test: " + filecontents)
+        }
       });
     });
   },
