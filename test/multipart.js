@@ -16,6 +16,7 @@ var mpu = kloudless.files.uploadMultipart({
   parent_id: process.env.TEST_ACCOUNT_FOLDER || 'some-folder-id-here',
   file: fs.createReadStream(path.join(__dirname, 'fixtures', test_file)),
   name: test_file,
+  size: fs.statSync(path.join(__dirname, 'fixtures', test_file)).size,
   logging: 'debug'
 });
 
