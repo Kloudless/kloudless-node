@@ -185,7 +185,7 @@ Returns a FileStream. See code example for ```files.contents()``` above. Example
 ***
 
 ### folders.create()
-**Required params:** ```account_id, folder_id, name```
+**Required params:** ```account_id, parent_id, name```
 ***
 ### folders.get()
 **Required params:** ```account_id, folder_id```
