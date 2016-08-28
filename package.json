@@ -1,15 +1,8 @@
 {
   "name": "kloudless",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Kloudless",
-  "description": "Simple Node interface to the Kloudless API.",
-  "contributors": [{
-    "name": "Jackson Broussard",
-    "email": "jackson@kloudless.com"
-  }, {
-    "name": "Leo Zhang",
-    "email": "leo@kloudless.com"
-  }],
+  "description": "Basic Node interface to the Kloudless API.",
   "repository": {
     "type": "git",
     "url": "http://github.com/kloudless/kloudless-node.git"

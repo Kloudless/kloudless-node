@@ -4,12 +4,12 @@ html
   body
     button#authenticate-button Click here to authenticate!
     p#info
-    script(type='text/javascript', src='https://static-cdn.kloudless.com/p/platform/sdk/kloudless.authenticator.v0.1.js')
+    script(type='text/javascript', src='https://static-cdn.kloudless.com/p/platform/sdk/kloudless.authenticator.js')
     script!= 'var app_id = "' + app_id + '";'
     script.
       var info = document.getElementById('info');
       Kloudless.authenticator(document.getElementById('authenticate-button'), {
-        app_id: app_id
+        client_id: app_id,
       }, function(err, result) {
         if (err) {
           info.innerHTML = info.innerHTML + 'An error occurred in authentication' + '<br />';
