@@ -14,11 +14,11 @@ Contribution, under the MIT License.
 
 # Contributors
 
-Jackson Broussard @jbrsrd
-Leo Zhang @ilikebits
-Vinod Chandru @vinodc
-Chris Kuehl @chriskuehl
-Clifton Barnes @cbarnes
-Perelman Yuval @perelman
-Nick Quinlan @nquinlan
-Joeson Chiang @joesonchiang
+* Jackson Broussard @jbrsrd
+* Leo Zhang @ilikebits
+* Vinod Chandru @vinodc
+* Chris Kuehl @chriskuehl
+* Clifton Barnes @cbarnes
+* Perelman Yuval @perelman
+* Nick Quinlan @nquinlan
+* Joeson Chiang @joesonchiang
