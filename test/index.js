@@ -235,6 +235,17 @@ async.waterfall([
       console.log('folders delete test pass');
       cb(null);
     });
+  },
+
+  function(cb) {
+    console.log('users test...');
+    kloudless.users.get({account_id: accountId}, function(err, res){
+      if (err) {
+        return cb('Users test: ' + err);
+      }
+      console.log('users test pass');
+      cb(null);
+    });
   }
 ], function(err){
   if (err) {
