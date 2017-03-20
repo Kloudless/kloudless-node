@@ -18,7 +18,7 @@ Contribution, under the MIT License.
 * Leo Zhang [@ilikebits](https://github.com/ilikebits)
 * Vinod Chandru [@vinodc](https://github.com/vinodc)
 * Chris Kuehl [@chriskuehl](https://github.com/chriskuehl)
-* Clifton Barnes [@cbarnes](https://github.com/cbarnes)
+* Clifton Barnes [@cabarnes](https://github.com/cabarnes)
 * Perelman Yuval [@perelman](https://github.com/perelman)
 * Nick Quinlan [@nquinlan](https://github.com/nquinlan)
 * Joeson Chiang [@joesonchiang](https://github.com/joesonchiang)
