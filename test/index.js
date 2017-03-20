@@ -1,3 +1,5 @@
+'use strict';
+
 var kloudless = require('../lib/kloudless')(process.env.API_KEY || 'your-api-key-here')
   , async = require('async')
   , fs = require('fs')
@@ -23,16 +25,32 @@ var accountId;
 async.waterfall([
   function(cb) {
     console.log('account base test...');
-    kloudless.accounts.base({}, function(err, res){
+    kloudless.accounts.base({active: true}, function(err, res){
       if (err) {
         return cb('Accounts base: ' + err);
       }
-      accountId = res.objects[0].id;
+      if (res.objects.length === 0)
+        return cb('No accounts available.');
+
+      // console.log('accounts:', res.objects);
+
       if (process.env.TEST_ACCOUNT_ID)
         accountId = process.env.TEST_ACCOUNT_ID;
-      console.log('accounts base test pass');
-      // console.log('accounts:', res.objects);
-      cb(null);
+      else
+        accountId = res.objects[0].id;
+
+      kloudless.accounts.get({
+        active: true,
+        account_id: accountId
+      }, function(err, accountData) {
+        if (err)
+          return cb('Account retrieval: ' + err);
+
+        console.log("Using", accountData.service, "account", accountData.id,
+                    ':', accountData.account);
+        console.log('accounts base and retrieval tests pass');
+        cb(null);
+      });
     });
   },
 
@@ -237,16 +255,72 @@ async.waterfall([
     });
   },
 
-  function(cb) {
-    console.log('users test...');
-    kloudless.users.get({account_id: accountId}, function(err, res){
-      if (err) {
-        return cb('Users test: ' + err);
+  function(adminCB) {
+    console.log('Admin tests.');
+    kloudless.accounts.base({admin: true, active: true}, function(err, res){
+      if (err)
+        return adminCB('Admin tests: ' + err);
+
+      if (res.objects.length === 0) {
+        console.log('No admin accounts available. Skipping admin tests.');
+        adminCB(null);
       }
-      console.log('users test pass');
-      cb(null);
+
+      let adminId;
+      if (process.env.TEST_ACCOUNT_ID)
+        adminId = process.env.TEST_ACCOUNT_ID;
+      else {
+        let accountData = res.objects[0];
+        adminId = accountData.id;
+        console.log("Using", accountData.service, "admin account", accountData.id,
+                    ':', accountData.account);
+      }
+
+      /*
+       * Admin tests
+       */
+      async.waterfall([
+
+        function(userCB) {
+          console.log('users test...');
+          kloudless.users.get({account_id: adminId}, function(err, res){
+            if (err) {
+              return userCB('Users test: ' + err);
+            }
+            console.log('users test pass');
+
+            if (res.objects.length === 0) {
+              console.log("No users available. Skipping user tests.");
+              userCB(null);
+            }
+
+            let userId = res.objects[0].id;
+
+            async.waterfall([
+
+              function(cb) {
+                console.log('user memberships test...');
+                kloudless.users.groups({
+                  account_id: adminId,
+                  user_id: userId,
+                }, function(err, res){
+                  if (err) {
+                    return cb('User Memberships test: ' + err);
+                  }
+                  console.log('user memberships test pass');
+                  cb(null);
+                });
+              },
+
+            ], userCB);
+
+          });
+        },
+
+      ], adminCB);
     });
-  }
+  },
+
 ], function(err){
   if (err) {
     console.log('Test failed: ');
