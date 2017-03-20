@@ -237,6 +237,16 @@ Optional parameters:
 * `page_size`: The number of entries to retrieve.
 ***
 
+### users.get()
+**Required params:** ```account_id```
+
+Optional parameters:
+* `user_id`: The id of the particular user.
+***
+### users.groups()
+**Required params:** ```account_id, user_id```
+***
+
 ## Testing
 
 `API_KEY=<api key> node index.js`
