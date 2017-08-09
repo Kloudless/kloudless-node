@@ -27,13 +27,13 @@ var accountId, fileId;
 async.series([
   function(cb) {
     // to get the base account data
-    kloudless.accounts.base({}, function(err, res) {
+    kloudless.accounts.base({}, function(err, data, response) {
       if (err) {
         return console.log("Error getting the account data: " + err);
       }
       // assuming you authorized at least one service (Dropbox, Google Drive, etc.)
       console.log("We got the account data!");
-      accountId = res["objects"][0]["id"];
+      accountId = data["objects"][0]["id"];
       cb();
     });
   },
@@ -52,13 +52,13 @@ async.series([
       "queryParams": {
         "overwrite": "true"
       }
-    }, function(err, res) {
+    }, function(err, data, response) {
       if (err) {
         console.log("Error uploading file: " + err);
         return cb(err);
       }
       console.log("We uploaded the file!");
-      fileId = res['id'];
+      fileId = data['id'];
       cb();
     });
   },

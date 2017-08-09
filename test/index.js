@@ -25,7 +25,7 @@ var accountId;
 async.waterfall([
   function(cb) {
     console.log('account base test...');
-    kloudless.accounts.base({active: true}, function(err, res){
+    kloudless.accounts.base({active: true}, function(err, res, response){
       if (err) {
         return cb('Accounts base: ' + err);
       }
@@ -38,6 +38,12 @@ async.waterfall([
         accountId = process.env.TEST_ACCOUNT_ID;
       else
         accountId = res.objects[0].id;
+
+      var cType = response.headers['content-type'];
+      var expectedCType = 'application/json';
+      if (!cType || cType.toLowerCase().indexOf(expectedCType) !== 0) {
+        cb("Header data incorrect.");
+      }
 
       kloudless.accounts.get({
         active: true,
