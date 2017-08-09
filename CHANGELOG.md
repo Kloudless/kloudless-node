@@ -1,5 +1,9 @@
 # Change Log
 
+## TBD
+
+* The response object is now returned in the callback.
+
 ## 1.0.1
 
 * The multipart upload endpoints now correctly use `v1` instead of `v0`.
