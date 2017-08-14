@@ -1,6 +1,14 @@
 # Kloudless Node API
 
 ## Installation
+
+Install `kloudless` to your application with the following command:
+
+```
+npm install --save kloudless
+```
+
+You can also install the latest version from our GitHub page:
 ```
 npm install git://github.com/Kloudless/kloudless-node
 ```
