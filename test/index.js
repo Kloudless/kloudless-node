@@ -61,6 +61,23 @@ async.waterfall([
   },
 
   function(cb) {
+    console.log('error base test...');
+    kloudless.folders.create({
+      account_id: accountId,
+      name: folderName,
+      parent_id: 'abcdefghijk'
+    }, function(err, res) {
+      if (err.raw.response.statusCode == 400) {
+        console.log(
+          'Error status code available: ' + err.raw.response.statusCode);
+        cb(null);
+      } else {
+        return cb('Error statud code not retrieved')
+      }
+    });
+  },
+
+  function(cb) {
     console.log('account search test...');
     kloudless.accounts.search({
       account_id: accountId,
