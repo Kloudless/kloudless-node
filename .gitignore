@@ -1,5 +1,8 @@
 .DS_Store
+
+# IDE
 *.sublime*
+.idea
 
 # Logs
 logs
