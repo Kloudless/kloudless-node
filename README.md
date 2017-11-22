@@ -47,15 +47,15 @@ async.series([
   },
 
   function(cb) {
-    // create the fs.ReadStream to pass in to files.upload()
-    var filestream = fs.createReadStream('./test.txt');
+    // read file as Buffer to pass in to files.upload()
+    var fileBuffer = fs.readFileSync('./test.txt');
 
     // to upload a file to the account we just got data for
     kloudless.files.upload({
       "name": "test.txt",
       "account_id": accountId,
       "parent_id": "root",
-      "file": filestream,
+      "file": fileBuffer,
       // all API calls can specify URL query parameters by defining "queryParams"
       "queryParams": {
         "overwrite": "true"
