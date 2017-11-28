@@ -1,6 +1,11 @@
 # Change Log
 
-## TBD
+## 1.0.4
+
+* The upload endpoint now uses the v1 format and accepts `ReadStream` objects
+  as well as `Buffer` objects.
+
+## 1.0.3
 
 * The response object is now returned in the callback.
 
