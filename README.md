@@ -71,8 +71,9 @@ async.series([
     });
   },
 
-  function(cb){
+  function (cb){
     // and now we're going to download that file we just uploaded
+    // method 1 : use Buffer to concatenate each chunks
     kloudless.files.contents({
       "account_id": accountId,
       "file_id": fileId
@@ -82,16 +83,33 @@ async.series([
       }
       var filecontents = '';
       console.log("got the filestream:");
-      filestream.on('data', function(chunk) {
+      filestream.on('data', function (chunk) {
         console.log("reading in data chunk...");
         console.log(chunk);
-        filecontents += chunk;
+        filecontents = Buffer.concat([filecontents, chunk]);
       });
-      filestream.on('end',function() {
+      filestream.on('end', function () {
         console.log("finished reading file!");
-        console.log(filecontents);
+        fs.writeFile("download.jpg", filecontents, function (err) {
+          console.log('write file error:' + err);
+        });
         cb();
       });
+    });
+  },
+  function (cb) {
+    // and now we're going to download that file we just uploaded
+    // method 2 : pipe the filestream directly
+    kloudless.files.contents({
+      "account_id": accountId,
+      "file_id": fileId
+    }, function (err, filestream) {
+      if (err) {
+        return console.log("Files contents: " + err);
+      }
+      console.log("got the filestream:");
+      filestream.pipe(fs.createWriteStream('download_2.jpg'));
+      cb();
     });
   }
 ]);
