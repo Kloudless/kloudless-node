@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.5
+
+* Resolving encoding issues with downloaded content. (#10)
+
 ## 1.0.4
 
 * The upload endpoint now uses the v1 format and accepts `ReadStream` objects
