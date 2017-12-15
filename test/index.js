@@ -3,7 +3,8 @@
 var kloudless = require('../lib/kloudless')(process.env.API_KEY || 'your-api-key-here')
   , async = require('async')
   , fs = require('fs')
-  , path = require('path');
+  , path = require('path')
+  , assert = require('assert');
 
 if (process.env.API_HOST)
     kloudless.setHost(process.env.API_HOST, process.env.API_PORT || 443);
@@ -154,22 +155,13 @@ async.waterfall([
       if (err) {
         return cb('Files contents: ' + err);
       }
-      var filecontents = '';
+
       console.log('got the filestream:');
-      filestream.on('data', function(chunk){
-        console.log('reading in data chunk...');
-        console.log(chunk);
-        filecontents += chunk;
-      });
-      filestream.on('end',function(){
-        console.log('finished reading file!');
-        if (filecontents === fileBuffer.toString()) {
-          console.log('files contents test pass');
-          return cb(null);
-        }
-        else {
-          return cb("File contents fail test: " + filecontents)
-        }
+      filestream.on('readable', function () {
+        var buffer = filestream.read();
+        assert.deepStrictEqual(buffer, fileBuffer);
+        console.log('files contents test pass');
+        return cb(null);
       });
     });
   },
