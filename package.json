@@ -8,23 +8,31 @@
     "url": "http://github.com/kloudless/kloudless-node.git"
   },
   "main": "./lib/kloudless",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "async": ">=0.6.2",
     "form-data": ">=0.1.2",
-
     "request": "~2.42.0",
     "bluebird": "~2.3.2",
     "streamifier": "~0.1.0"
   },
   "devDependencies": {
-    "nodeunit": ">=0.8.6",
-
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.2.2",
+    "babel-preset-env": "^1.6.1",
     "express": "*",
+    "jade": "*",
+    "jest": "^22.3.0",
     "morgan": "*",
-    "jade": "*"
+    "nodeunit": ">=0.8.6",
+    "regenerator-runtime": "^0.11.1"
   },
-  "licenses": [{
-    "type": "MIT License",
-    "url": "http://www.opensource.org/licenses/mit-license.php"
-  }]
+  "licenses": [
+    {
+      "type": "MIT License",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ]
 }

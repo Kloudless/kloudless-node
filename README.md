@@ -131,6 +131,60 @@ _See file upload example above._
 **Required params:** ```account_id```
 ***
 
+
+### **Applications API**
+Read [Management API Docs #Applications](https://developers.kloudless.com/docs/v1/management#applications) for more information. 
+### applications.list()
+**_No required parameters for applications.list()_**  
+Optional URL query parameters:
+* `active` 
+* `page_size`  
+* `page`  
+***
+### applications.get()
+**Required params:** ```application_id```
+***
+### applications.create()
+**Required params:** ```name```  
+Optional parameters:
+* `name` 
+* `description` 
+* `logo_url` 
+* `implicit_grant_enabled`
+* `recent_enabled`
+* `events_grant_enabled`
+* `source`
+***
+### applications.update()
+**Required params:** ```application_id```  
+Optional parameters:
+* `description` 
+* `logo_url` 
+* `active` 
+* `implicit_grant_enabled`
+* `recent_enabled`
+* `events_grant_enabled`
+***
+### applications.delete()
+**Required params:** ```application_id```
+***
+
+### **Developers API**
+Read [Management API Docs #Developers](https://developers.kloudless.com/docs/v1/management#developers) for more information.
+### developers.list()
+**_No required parameters for applications.list()_**  
+***
+### developers.get()
+**Required params:** ```developer_id```
+***
+### developers.update()
+**Required params:** ```developer_id```      
+Optional parameters:
+* `first_name` 
+* `last_name` 
+***
+
+
 ### files.upload()
 **Required params:** ```account_id, parent_id, file, name```
 "file" should be an instance of Buffer.
@@ -274,13 +328,22 @@ Optional parameters:
 ***
 
 ## Testing
+In `/test` directory
+```bash
+API_KEY=<api key> node index.js
+```
 
-`API_KEY=<api key> node index.js`
+### Test meta API with Jest  
+In project root directory
+```bash
+DEV_KEY=<developer key> API_HOST=<test-api.com> API_PORT=443 npm test 
+```
 
 Some other env vars that may be useful are:
 
 * TEST_ACCOUNT_ID
 * API_HOST
+* API_PORT
 * API_CA
 * TEST_ACCOUNT_FOLDER (multipart.js only)
 
