@@ -27,13 +27,19 @@ We'll start with a couple of examples:
 ```javascript
 var async = require('async'); // for clean demonstration
 
+// If you want to use Bearer tokens, enter an empty string in place of the API key
 var kloudless = require('kloudless')('your-api-key-here');
+
 var fs = require('fs');
 
 var accountId, fileId;
 
 async.series([
   function(cb) {
+    
+    // If you are using a Bearer token, you can assign it like so:
+    //kloudless.setBearerToken('bearer-token-here');
+
     // to get the base account data
     kloudless.accounts.base({}, function(err, data, response) {
       if (err) {
@@ -133,11 +139,11 @@ _See file upload example above._
 
 
 ### **Applications API**
-Read [Management API Docs #Applications](https://developers.kloudless.com/docs/v1/management#applications) for more information. 
+Read [Management API Docs #Applications](https://developers.kloudless.com/docs/v1/management#applications) for more information.
 ### applications.list()
 **_No required parameters for applications.list()_**  
 Optional URL query parameters:
-* `active` 
+* `active`
 * `page_size`  
 * `page`  
 ***
@@ -147,9 +153,9 @@ Optional URL query parameters:
 ### applications.create()
 **Required params:** ```name```  
 Optional parameters:
-* `name` 
-* `description` 
-* `logo_url` 
+* `name`
+* `description`
+* `logo_url`
 * `implicit_grant_enabled`
 * `recent_enabled`
 * `events_grant_enabled`
@@ -158,9 +164,9 @@ Optional parameters:
 ### applications.update()
 **Required params:** ```application_id```  
 Optional parameters:
-* `description` 
-* `logo_url` 
-* `active` 
+* `description`
+* `logo_url`
+* `active`
 * `implicit_grant_enabled`
 * `recent_enabled`
 * `events_grant_enabled`
@@ -180,8 +186,8 @@ Read [Management API Docs #Developers](https://developers.kloudless.com/docs/v1/
 ### developers.update()
 **Required params:** ```developer_id```      
 Optional parameters:
-* `first_name` 
-* `last_name` 
+* `first_name`
+* `last_name`
 ***
 
 
@@ -336,7 +342,7 @@ API_KEY=<api key> node index.js
 ### Test meta API with Jest  
 In project root directory
 ```bash
-DEV_KEY=<developer key> API_HOST=<test-api.com> API_PORT=443 npm test 
+DEV_KEY=<developer key> API_HOST=<test-api.com> API_PORT=443 npm test
 ```
 
 Some other env vars that may be useful are:
@@ -346,4 +352,3 @@ Some other env vars that may be useful are:
 * API_PORT
 * API_CA
 * TEST_ACCOUNT_FOLDER (multipart.js only)
-
