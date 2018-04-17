@@ -2,6 +2,11 @@
 
 ## 1.0.5
 
+* The Management API is now supported, along with DeveloperKey auth.
+* Kloudless Bearer token auth is now supported.
+
+## 1.0.5
+
 * Resolving encoding issues with downloaded content. (#10)
 
 ## 1.0.4

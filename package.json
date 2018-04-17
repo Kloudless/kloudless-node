@@ -1,6 +1,6 @@
 {
   "name": "kloudless",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Kloudless <hello@kloudless.com>",
   "description": "Basic Node interface to the Kloudless API.",
   "repository": {
