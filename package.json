@@ -1,21 +1,21 @@
 {
   "name": "kloudless",
   "version": "1.0.6",
-  "author": "Kloudless <hello@kloudless.com>",
   "description": "Basic Node interface to the Kloudless API.",
   "repository": {
     "type": "git",
     "url": "http://github.com/kloudless/kloudless-node.git"
   },
+  "author": "Kloudless <hello@kloudless.com>",
   "main": "./lib/kloudless",
   "scripts": {
     "test": "jest"
   },
   "dependencies": {
     "async": ">=0.6.2",
-    "form-data": ">=0.1.2",
-    "request": "~2.42.0",
     "bluebird": "~2.3.2",
+    "form-data": ">=0.1.2",
+    "request": "^2.88.0",
     "streamifier": "~0.1.0"
   },
   "devDependencies": {
