@@ -11,6 +11,9 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "dependencies": {
     "async": ">=0.6.2",
     "bluebird": "~2.3.2",
@@ -22,11 +25,11 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^22.2.2",
     "babel-preset-env": "^1.6.1",
-    "express": "*",
-    "jade": "*",
+    "express": "^4.16.4",
     "jest": "^22.3.0",
-    "morgan": "*",
+    "morgan": "^1.9.1",
     "nodeunit": ">=0.8.6",
+    "pug": "^2.0.3",
     "regenerator-runtime": "^0.11.1"
   },
   "licenses": [
