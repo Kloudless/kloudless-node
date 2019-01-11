@@ -6,6 +6,7 @@
     "type": "git",
     "url": "http://github.com/kloudless/kloudless-node.git"
   },
+  "license": "MIT",
   "author": "Kloudless <hello@kloudless.com>",
   "main": "./lib/kloudless",
   "scripts": {
@@ -31,11 +32,5 @@
     "nodeunit": ">=0.8.6",
     "pug": "^2.0.3",
     "regenerator-runtime": "^0.11.1"
-  },
-  "licenses": [
-    {
-      "type": "MIT License",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
-    }
-  ]
+  }
 }
