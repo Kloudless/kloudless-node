@@ -1,6 +1,6 @@
 {
   "name": "kloudless",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Basic Node interface to the Kloudless API.",
   "repository": {
     "type": "git",
