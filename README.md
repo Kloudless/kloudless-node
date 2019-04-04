@@ -1,6 +1,8 @@
-# Kloudless Node API
+# Visit https://github.com/Kloudless/kloudless-js for our new JS and Node SDK.
 
-## Installation
+## Kloudless Node API (Deprecated)
+
+### Installation
 
 Install `kloudless` to your application with the following command:
 
@@ -13,7 +15,7 @@ You can also install the latest version from our GitHub page:
 npm install git://github.com/Kloudless/kloudless-node
 ```
 
-## Node-specific docs and examples
+### Node-specific docs and examples
 
 REST API docs available here: https://developers.kloudless.com/docs
 
@@ -121,36 +123,36 @@ async.series([
 ]);
 ```
 
-## Resources and Methods
+### Resources and Methods
 
 **All API calls can specify URL query parameters by defining "queryParams".**
 _See file upload example above._
 ***
 
-### accounts.base()
+#### accounts.base()
 **_No required parameters for accounts.base()_**
 ***
-### accounts.get()
+#### accounts.get()
 **Required params:** ```account_id```
 ***
-### accounts.delete()
+#### accounts.delete()
 **Required params:** ```account_id```
 ***
 
 
-### **Applications API**
+#### **Applications API**
 Read [Management API Docs #Applications](https://developers.kloudless.com/docs/v1/management#applications) for more information.
-### applications.list()
+#### applications.list()
 **_No required parameters for applications.list()_**  
 Optional URL query parameters:
 * `active`
 * `page_size`  
 * `page`  
 ***
-### applications.get()
+#### applications.get()
 **Required params:** ```application_id```
 ***
-### applications.create()
+#### applications.create()
 **Required params:** ```name```  
 Optional parameters:
 * `name`
@@ -161,7 +163,7 @@ Optional parameters:
 * `events_grant_enabled`
 * `source`
 ***
-### applications.update()
+#### applications.update()
 **Required params:** ```application_id```  
 Optional parameters:
 * `description`
@@ -171,19 +173,19 @@ Optional parameters:
 * `recent_enabled`
 * `events_grant_enabled`
 ***
-### applications.delete()
+#### applications.delete()
 **Required params:** ```application_id```
 ***
 
-### **Developers API**
+#### **Developers API**
 Read [Management API Docs #Developers](https://developers.kloudless.com/docs/v1/management#developers) for more information.
-### developers.list()
+#### developers.list()
 **_No required parameters for applications.list()_**  
 ***
-### developers.get()
+#### developers.get()
 **Required params:** ```developer_id```
 ***
-### developers.update()
+#### developers.update()
 **Required params:** ```developer_id```      
 Optional parameters:
 * `first_name`
@@ -191,13 +193,13 @@ Optional parameters:
 ***
 
 
-### files.upload()
+#### files.upload()
 **Required params:** ```account_id, parent_id, file, name```
 "file" should be an instance of Buffer.
 You can create a Buffer like this: ```var your_var_name = new Buffer("the file contents go here")```
 "name" should be the name of the file after it's uploaded.
 ***
-### files.uploadMultipart()
+#### files.uploadMultipart()
 **Parameters:** `options`
 
 `options` is an options object with keys:
@@ -231,7 +233,7 @@ The `MultipartUpload` also exposes the following methods:
 * `abort()` -- aborts the transfer
 ***
 
-### files.resumeMultipart()
+#### files.resumeMultipart()
 **Parameters:** `options`
 
 `options` is a completion state, with at least keys:
@@ -241,7 +243,7 @@ The `MultipartUpload` also exposes the following methods:
 
 This method returns a `MultipartUpload` which behaves exactly as if constructed in a standard upload.
 
-### files.stopMultipart()
+#### files.stopMultipart()
 **Parameters:** `options`
 
 `options` is an options object with keys:
@@ -250,57 +252,57 @@ This method returns a `MultipartUpload` which behaves exactly as if constructed 
 Aborts the specified multipart upload session to prevent storage leaks.
 ***
 
-### files.get()
+#### files.get()
 **Required params:** ```account_id, file_id```
 Gets metadata for the file. **Not for downloading. If you want to download, use** ```contents()```**.**
 ***
-### files.delete()
+#### files.delete()
 **Required params:** ```account_id, file_id```
 ***
-### files.move()
+#### files.move()
 **Required params:** ```account_id, file_id, parent_id```
 "parent_id" should be the ID of the folder you wish to move the file to.
 ***
-### files.rename()
+#### files.rename()
 **Required params:** ```account_id, file_id, name```
 This is a vanity method, files can also be renamed using the ```move()``` method by including the desired "name" parameter.
 ***
-### files.contents()
+#### files.contents()
 **Required params:** ```account_id, file_id```
 Returns a FileStream. See code example for ```files.contents()``` above. Example also in test.js.
 ***
 
-### folders.create()
+#### folders.create()
 **Required params:** ```account_id, parent_id, name```
 ***
-### folders.get()
+#### folders.get()
 **Required params:** ```account_id, folder_id```
 ***
-### folders.delete()
+#### folders.delete()
 **Required params:** ```account_id, folder_id```
 ***
-### folders.move()
+#### folders.move()
 **Required params:** ```account_id, folder_id, parent_id```
 ***
-### folders.rename()
+#### folders.rename()
 **Required params:** ```account_id, folder_id, name```
 This is a vanity function just like ```files.rename()```. ```folders.move()``` can be used to rename as well.
 ***
-### folders.contents()
+#### folders.contents()
 **Required params:** ```account_id, folder_id```
 ***
 
-### links.base()
+#### links.base()
 **Required params:** ```account_id```
 ***
-### links.create()
+#### links.create()
 **Required params:** ```account_id, file_id```
 "file_id" should be the file you want to link to.
 ***
-### links.get()
+#### links.get()
 **Required params:** ```account_id, link_id```
 ***
-### links.update()
+#### links.update()
 **Required params:** ```account_id, link_id```
 
 Optional parameters:
@@ -308,14 +310,14 @@ Optional parameters:
 * `password`: set a password for the link.
 * `expiration`: set an expiration date for the link. Can be an instance of Date() or a number (in milliseconds).
 ***
-### links.delete()
+#### links.delete()
 **Required params:** ```account_id, link_id```
 ***
 
-### events.getLastCursor()
+#### events.getLastCursor()
 **Required params:** ```account_id```
 ***
-### events.get()
+#### events.get()
 **Required params:** ```account_id```
 
 Optional parameters:
@@ -323,23 +325,23 @@ Optional parameters:
 * `page_size`: The number of entries to retrieve.
 ***
 
-### users.get()
+#### users.get()
 **Required params:** ```account_id```
 
 Optional parameters:
 * `user_id`: The id of the particular user.
 ***
-### users.groups()
+#### users.groups()
 **Required params:** ```account_id, user_id```
 ***
 
-## Testing
+### Testing
 In `/test` directory
 ```bash
 API_KEY=<api key> node index.js
 ```
 
-### Test meta API with Jest  
+#### Test meta API with Jest  
 In project root directory
 ```bash
 DEV_KEY=<developer key> API_HOST=<test-api.com> API_PORT=443 npm test
